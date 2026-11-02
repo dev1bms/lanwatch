@@ -1,0 +1,22 @@
+[Unit]
+Description=LanWatch - devices on the local network
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=lanwatch
+WorkingDirectory=/opt/lanwatch
+EnvironmentFile=-/opt/lanwatch/.env
+Environment=LW_DB_PATH=/var/lib/lanwatch/lanwatch.db
+ExecStart=/opt/lanwatch/.venv/bin/lanwatch
+Restart=on-failure
+StateDirectory=lanwatch
+AmbientCapabilities=CAP_NET_RAW
+CapabilityBoundingSet=CAP_NET_RAW
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
